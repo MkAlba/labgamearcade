@@ -1,5 +1,5 @@
 window.addEventListener('load', () => {
-    const game = new Game('game-canvas');
+    const game = new Game('canvas-game');
     game.start();
 
 })
