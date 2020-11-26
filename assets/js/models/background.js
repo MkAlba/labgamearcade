@@ -43,6 +43,6 @@ class Background {
         this.y += this.vy;
         if (this.y + this.height <= 0) {
             this.y = 0;
-    }
+        }
     }
 }

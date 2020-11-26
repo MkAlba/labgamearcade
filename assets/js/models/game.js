@@ -1,19 +1,23 @@
 class Game {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
-        this.canvas.width = 480;
-        this.canvas.height = 640;
+        this.canvas.width = 650;
+        this.canvas.height = 850;
         this.ctx = this.canvas.getContext('2d');
 
+        
         this.fps = 1000/60;
         this.intervalId = undefined;
-
+        
         this.background = new Background(this.ctx);
+        this.spaceship = new Spaceship(this.ctx, (this.canvas.width/2), 780);
 
     }
 
     onKeyEvent(event) {
+        this.spaceship.onKeyEvent(event);
         this.background.onKeyEvent(event);
+
     }
 
     start() {
@@ -38,10 +42,11 @@ class Game {
 
     draw() {
         this.background.draw();
+        this.spaceship.draw();
     }
 
     move() {
         this.background.move();
+        this.spaceship.move();              
     }
-
 }
