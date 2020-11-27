@@ -7,6 +7,7 @@ class Spaceship {
         this.vx = 0;
 
         this.y = y;
+        this.minY = 0;
 
         this.width = 0;
         this.height = 0;
@@ -14,9 +15,9 @@ class Spaceship {
         this.sprite = new Image();
         this.sprite.src = 'assets/img/spaceship.png';
         this.sprite.isReady = false;
-        this.sprite.horizontalFrames = 4;
+        this.sprite.horizontalFrames = 3;
         this.sprite.verticalFrames = 1;
-        this.sprite.horizontalFrameIndex = 0;
+        this.sprite.horizontalFrameIndex = 2;
         this.sprite.verticalFrameIndex = 0;
         this.sprite.onload = () => {
             console.log('loaded');
@@ -31,9 +32,19 @@ class Spaceship {
             right: false,
             left: false,
             //down: false,
-            //space: false,
+       }
+
+        this.canFire = true;
+        this.bullets = [];
+
+        this.sounds = {
+            fire: new Audio('assets/sounds/soundshootspace.wav')
         }
-   }
+    }
+
+    isReady() {
+        return this.sprite.isReady;
+    }
 
     onKeyEvent(event){
         const state = event.type === 'keydown';
@@ -44,7 +55,20 @@ class Spaceship {
             case KEY_LEFT:
                 this.movements.left = state;
                 break;
+            case KEY_FIRE:
+                if(this.canFire) {
+                    this.bullets.push(new Firespace(this.ctx, this.x + this.width/2, this.y));
+                    this.sounds.fire.currentTime = 0;
+                    this.sounds.fire.play();
+                    this.canFire = false;
+                    setTimeout(() => this.canFire = true, 100);
+                 break;
+                }
         }
+    }
+
+    clear() {
+        this.bullets = this.bullets.filter(bullet => bullet.y <= this.ctx.canvas.height)
     }
 
     draw() {
@@ -59,12 +83,16 @@ class Spaceship {
                 this.y,
                 this.width,
                 this.height,
-
             ) 
+
+            this.bullets.forEach(bullet => bullet.draw());
+            this.sprite.drawCount++;
         }
     }
 
     move() {
+        this.bullets.forEach(bullet => bullet.move());
+
         if (this.movements.right) {
             this.vx = SPEED;
         } else if (this.movements.left) {
@@ -75,8 +103,8 @@ class Spaceship {
         
         this.x += this.vx;  
         
-        if (this.x >= this.maxX-this.width/2) {
-            this.x = this.maxX-this.width/2;
+        if (this.x >= this.maxX - this.width) {
+            this.x = this.maxX - this.width;
         } else if (this.x <= this.minX) {
             this.x = this.minX;
         }

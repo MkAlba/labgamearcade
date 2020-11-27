@@ -10,7 +10,7 @@ class Game {
         this.intervalId = undefined;
         
         this.background = new Background(this.ctx);
-        this.spaceship = new Spaceship(this.ctx, (this.canvas.width/2), 780);
+        this.spaceship = new Spaceship(this.ctx, this.canvas.width, 780);
 
     }
 
@@ -33,6 +33,7 @@ class Game {
 
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.spaceship.clear();
     }
 
     stop() {
