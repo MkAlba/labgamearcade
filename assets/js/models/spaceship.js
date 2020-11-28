@@ -20,13 +20,13 @@ class Spaceship {
         this.sprite.horizontalFrameIndex = 2;
         this.sprite.verticalFrameIndex = 0;
         this.sprite.onload = () => {
-            console.log('loaded');
             this.sprite.isReady = true;
             this.sprite.frameWidth = Math.floor(this.sprite.width/this.sprite.horizontalFrames);
             this.sprite.frameHeight = Math.floor(this.sprite.height/this.sprite.verticalFrames);
             this.width = this.sprite.frameWidth;
             this.height = this.sprite.frameHeight;
-        }
+            this.x = x - this.width /2;
+        } 
 
         this.movements = {
             right: false,
@@ -57,6 +57,7 @@ class Spaceship {
                 break;
             case KEY_FIRE:
                 if(this.canFire) {
+                    this.animateShoot();
                     this.bullets.push(new Firespace(this.ctx, this.x + this.width/2, this.y));
                     this.sounds.fire.currentTime = 0;
                     this.sounds.fire.play();
@@ -68,10 +69,11 @@ class Spaceship {
     }
 
     clear() {
-        this.bullets = this.bullets.filter(bullet => bullet.y <= this.ctx.canvas.height)
+        this.bullets = this.bullets.filter(bullet => bullet.y >= 0)
     }
 
     draw() {
+        console.log('bullets:', this.bullets.length)
         if(this.sprite.isReady) {
             this.ctx.drawImage (
                 this.sprite,
@@ -87,6 +89,7 @@ class Spaceship {
 
             this.bullets.forEach(bullet => bullet.draw());
             this.sprite.drawCount++;
+            this.animateShoot();
         }
     }
 
@@ -108,5 +111,19 @@ class Spaceship {
         } else if (this.x <= this.minX) {
             this.x = this.minX;
         }
+    }
+
+    animateShoot() {
+        if (this.canFire) {
+            this.sprite.horizontalFrameIndex = 2;
+            this.sprite.verticalFrameIndex = 0;
+        } else { 
+            this.resetAnimation()
+        }
+    }
+
+    resetAnimation() {
+        this.sprite.horizontalFrameIndex = 0;
+        this.sprite.verticalFrameIndex = 0;
     }
 }

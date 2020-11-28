@@ -16,10 +16,12 @@ class Firespace {
             this.isReady = true;
             this.width = this.sprite.width;
             this.height = this.sprite.height;
-        }     
+        }   
+        
+        this.drawCount = 0;
     }
 
-    draw() {
+    draw() {  
         this.ctx.drawImage (
             this.sprite,
             this.x,
@@ -28,6 +30,7 @@ class Firespace {
             this.height,
 
         )
+        this.drawCount++;
     }
 
     move() {
