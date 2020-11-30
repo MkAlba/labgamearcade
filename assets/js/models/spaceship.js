@@ -33,10 +33,10 @@ class Spaceship {
             left: false,
             //down: false,
        }
-
+       
         this.canFire = true;
         this.bullets = [];
-
+       
         this.sounds = {
             fire: new Audio('assets/sounds/soundshootspace.wav')
         }
@@ -62,7 +62,7 @@ class Spaceship {
                     this.sounds.fire.currentTime = 0;
                     this.sounds.fire.play();
                     this.canFire = false;
-                    setTimeout(() => this.canFire = true, 100);
+                    setTimeout(() => this.canFire = true, 200) ;
                  break;
                 }
         }
@@ -126,4 +126,4 @@ class Spaceship {
         this.sprite.horizontalFrameIndex = 0;
         this.sprite.verticalFrameIndex = 0;
     }
-}
+ }
