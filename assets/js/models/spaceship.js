@@ -5,6 +5,7 @@ class Spaceship {
         this.maxX = this.ctx.canvas.width;
         this.minX = 0;
         this.vx = 0;
+        
 
         this.y = y;
         this.minY = 0;
@@ -33,7 +34,7 @@ class Spaceship {
             left: false,
             //down: false,
        }
-       
+      
         this.canFire = true;
         this.bullets = [];
        
@@ -86,7 +87,6 @@ class Spaceship {
                 this.width,
                 this.height,
             ) 
-
             this.bullets.forEach(bullet => bullet.draw());
             this.sprite.drawCount++;
             this.animateShoot();

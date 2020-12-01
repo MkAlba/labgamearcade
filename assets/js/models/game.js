@@ -4,7 +4,6 @@ class Game {
         this.canvas.width = 650;
         this.canvas.height = 850;
         this.ctx = this.canvas.getContext('2d');
-
         
         this.fps = 1000/60;
         this.intervalId = undefined;
@@ -20,15 +19,22 @@ class Game {
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.50), Math.floor(this.canvas.height* 0.20)),
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.60), Math.floor(this.canvas.height* 0.20)),
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.70), Math.floor(this.canvas.height* 0.20)),    
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.20)),    
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.20)),  
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.10), Math.floor(this.canvas.height* 0.15)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.20), Math.floor(this.canvas.height* 0.15)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.30), Math.floor(this.canvas.height* 0.15)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.40), Math.floor(this.canvas.height* 0.15)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.50), Math.floor(this.canvas.height* 0.15)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.60), Math.floor(this.canvas.height* 0.15)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.70), Math.floor(this.canvas.height* 0.15)),    
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.15)),   
               
-        ];
-          
+        ];          
     }
 
-    onKeyEvent(event) {
-        
+    onKeyEvent(event) {        
         this.spaceship.onKeyEvent(event);
+        this.enemies.forEach(enemy => enemy.onKeyEvent(event));
     }
 
     start() {
@@ -37,8 +43,7 @@ class Game {
                 this.clear();
                 this.move();
                 this.draw();
-                this.checkCollisions();
-                
+                this.checkCollisions();                
             }, this.fps);
         }
     }
@@ -63,28 +68,34 @@ class Game {
     move() {
         this.background.move();
         this.spaceship.move();   
-        this.enemies.forEach(enemy => enemy.move());      
-      
-      
+
+        for (let i=0; i < this.enemies.length; i++) {                      
+            if(this.enemies[i].x + this.enemies[i].vx + this.enemies[i].width > this.ctx.canvas.width) {       
+                this.enemies.forEach(enemy => enemy.vx = -1)                
+            }
+            if(this.enemies[i].x + this.enemies[i].vx < 0 ) {
+                this.enemies.forEach(enemy => enemy.vx = 1)
+            }
+              this.enemies[i].x += this.enemies[i].vx;              
+        }  
     }
 
-    checkCollisions() {  
-    
-    for (let i=0; i < this.enemies.length; i++) {
-        let enemy = this.enemies[i]
-        let collides = false;    
-        for (let j=0; j < this.spaceship.bullets.length; j++) {
-            let bullet = this.spaceship.bullets[j]
-            if (bullet.collidesWith(enemy)) {
-                collides = true;
-                this.spaceship.bullets.splice(j,1);
-                break;
+    checkCollisions() {      
+        for (let i=0; i < this.enemies.length; i++) {
+            let enemy = this.enemies[i]
+            let collides = false;    
+            for (let j=0; j < this.spaceship.bullets.length; j++) {
+                let bullet = this.spaceship.bullets[j]
+                if (bullet.collidesWith(enemy)) {
+                    collides = true;
+                    this.spaceship.bullets.splice(j,1);
+                    break;
+                }
+            }
+            if (collides) {
+            this.enemies.splice(i, 1)  
             }
         }
-        if (collides){
-        this.enemies.splice(i, 1)  
-        }
-      }
     } 
 
 }

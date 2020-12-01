@@ -4,7 +4,8 @@ class Enemy {
         this.x = x;
         this.vx = 1;
         this.y = y;
-
+        
+        
         this.sprite = new Image();
         this.sprite.src = 'assets/img/enemies.png';
         this.sprite.isReady = false;
@@ -20,7 +21,7 @@ class Enemy {
             this.height = this.sprite.frameHeight;
         }
         this.drawCount = 0;
-        
+
         this.autoFire = true;
         this.enemyBullets = [];
        
@@ -33,14 +34,15 @@ class Enemy {
     onKeyEvent(event){
         const state = event.type === 'keydown';
         if(this.autoFire) {
-            this.enemyBullets.push(new Fireenemy(this.ctx, this.x + this.width/2, this.y));
+            this.enemyBullets.push(new Fireenemy(this.ctx, this.x + this.width/2, -this.y));
             this.autoFire = false;
             setInterval(() => this.autoFire = true, 200) ;
+            console.log(this.enemyBullets)
         }
     }
     
     clear() {
-        this.enemyBullets = this.enemyBullets.filter(enemyBullet => enemyBullet.y <= this.canvas.height)
+        this.enemyBullets = this.enemyBullets.filter(enemyBullet => enemyBullet.y >= this.height)
     }
 
     draw() {
@@ -70,17 +72,18 @@ class Enemy {
     
     move() {
         this.enemyBullets.forEach(enemyBullet => enemyBullet.move());
-     
+        
+         /*  if(this.x + this.vx + this.width > this.ctx.canvas.width) {
+            this.vx = -1;
+            
+        }
+        if(this.x + this.vx < 0 ) {
+            this.vx = 1;
+        }
+        this.x += this.vx
+        
+        ;   */  
     }
 
 }
 
-/*animateSprite (initialVerticalIndex, initialHorizontalIndex,segments, frequency) {
-    if (this.sprite.verticalFrameIndex != initialVerticalIndex) {
-        this.sprite.verticalFrameIndex = initialVerticalIndex;
-        this.sprite.horizontalFrameIndex = initialHorizontalIndex;
-    } else if (this.sprite.drawCount % frequency === 0) {
-        this.sprite.horizontalFrameIndex = (this.sprite.horizontalFrameIndex +1) % segments;
-        this.drawCount= 0;
-    }
-*/

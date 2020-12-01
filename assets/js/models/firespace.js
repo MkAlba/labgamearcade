@@ -9,6 +9,7 @@ class Firespace {
         this.sprite.src = 'assets/img/shootspace.png'
         this.sprite.isReady = false;
         this.sprite.onload = () => {
+            console.log('onload')
             this.isReady = true;
             this.width = this.sprite.width;
             this.height = this.sprite.height;
@@ -24,15 +25,12 @@ class Firespace {
             this.y,
             this.width,
             this.height,
-
         )
         this.drawCount++;
     }
 
     move() {
-
-        this.y -= this.vy
-         
+        this.y -= this.vy         
     }
     
     collidesWith(element) {

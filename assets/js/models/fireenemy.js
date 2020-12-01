@@ -13,10 +13,8 @@ class Fireenemy {
             this.isReady = true;
             this.width = this.sprite.width;
             this.height = this.sprite.height;
-        }   
-        
-        this.drawCount = 0;
-        
+        }         
+        this.drawCount = 0;         
     }
 
     draw() {  
@@ -26,14 +24,11 @@ class Fireenemy {
             this.y,
             this.width,
             this.height,
-
         )
         this.drawCount++;
     }
 
     move() {
-
-        this.y -= this.vy
-         
+        this.y -= this.vy         
     }
 }
