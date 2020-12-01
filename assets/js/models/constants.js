@@ -4,3 +4,4 @@ const KEY_LEFT =37;
 const KEY_FIRE =32;
 
 const SPEED = 3;  
+const GRAVITY = 0.9;

@@ -1,5 +1,5 @@
 class Game {
-    constructor(canvasId) {
+    constructor(canvasId, onGameEnd) {
         this.canvas = document.getElementById(canvasId);
         this.canvas.width = 650;
         this.canvas.height = 850;
@@ -27,14 +27,22 @@ class Game {
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.50), Math.floor(this.canvas.height* 0.15)),
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.60), Math.floor(this.canvas.height* 0.15)),
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.70), Math.floor(this.canvas.height* 0.15)),    
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.15)),   
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.15)), 
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.10), Math.floor(this.canvas.height* 0.10)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.20), Math.floor(this.canvas.height* 0.10)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.30), Math.floor(this.canvas.height* 0.10)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.40), Math.floor(this.canvas.height* 0.10)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.50), Math.floor(this.canvas.height* 0.10)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.60), Math.floor(this.canvas.height* 0.10)),
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.70), Math.floor(this.canvas.height* 0.10)),    
+            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.10)),   
               
-        ];          
+        ]; 
+        this.onGameEnd = onGameEnd;         
     }
 
     onKeyEvent(event) {        
         this.spaceship.onKeyEvent(event);
-        this.enemies.forEach(enemy => enemy.onKeyEvent(event));
     }
 
     start() {
@@ -71,16 +79,22 @@ class Game {
 
         for (let i=0; i < this.enemies.length; i++) {                      
             if(this.enemies[i].x + this.enemies[i].vx + this.enemies[i].width > this.ctx.canvas.width) {       
-                this.enemies.forEach(enemy => enemy.vx = -1)                
+                this.enemies.forEach(enemy => enemy.vx = -1) 
+                this.enemies.forEach(enemy => enemy.vy = GRAVITY)                               
             }
             if(this.enemies[i].x + this.enemies[i].vx < 0 ) {
                 this.enemies.forEach(enemy => enemy.vx = 1)
+            }          
+            if(this.enemies[i].collidesWith(this.spaceship)){
+                this.endGame();
             }
-              this.enemies[i].x += this.enemies[i].vx;              
+            this.enemies[i].x += this.enemies[i].vx;   
+            this.enemies[i].y += this.enemies[i].vy;              
         }  
     }
 
-    checkCollisions() {      
+    checkCollisions() { 
+             
         for (let i=0; i < this.enemies.length; i++) {
             let enemy = this.enemies[i]
             let collides = false;    
@@ -97,5 +111,11 @@ class Game {
             }
         }
     } 
-
+    stopGame() {
+        clearInterval(this.drawIntervalId);
+        this.drawIntervalId = undefined;
+    }
+    endGame() {
+        this.stopGame();        
+    }
 }

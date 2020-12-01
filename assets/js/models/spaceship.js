@@ -5,8 +5,6 @@ class Spaceship {
         this.maxX = this.ctx.canvas.width;
         this.minX = 0;
         this.vx = 0;
-        
-
         this.y = y;
         this.minY = 0;
 
@@ -126,4 +124,11 @@ class Spaceship {
         this.sprite.horizontalFrameIndex = 0;
         this.sprite.verticalFrameIndex = 0;
     }
+    
+    collidesWith(element) {
+        return this.x < element.x + element.width &&
+          this.x + this.width > element.x &&
+          this.y < element.y + element.height &&
+          this.y + this.height > element.y;
+        }
  }

@@ -4,6 +4,8 @@ class Enemy {
         this.x = x;
         this.vx = 1;
         this.y = y;
+        this.vy = 0;
+        this.maxY = this.ctx.canvas.height;
         
         
         this.sprite = new Image();
@@ -31,15 +33,14 @@ class Enemy {
         return this.sprite.isReady;
     }
 
-    onKeyEvent(event){
-        const state = event.type === 'keydown';
-        if(this.autoFire) {
+
+ /*   if (this.autoFire = false) {
             this.enemyBullets.push(new Fireenemy(this.ctx, this.x + this.width/2, -this.y));
             this.autoFire = false;
             setInterval(() => this.autoFire = true, 200) ;
             console.log(this.enemyBullets)
-        }
-    }
+        }*/
+    
     
     clear() {
         this.enemyBullets = this.enemyBullets.filter(enemyBullet => enemyBullet.y >= this.height)
@@ -72,6 +73,10 @@ class Enemy {
     
     move() {
         this.enemyBullets.forEach(enemyBullet => enemyBullet.move());
+
+      //  if (this.y = this.maxY) {
+      //      this.y = this.maxY
+        
         
          /*  if(this.x + this.vx + this.width > this.ctx.canvas.width) {
             this.vx = -1;
