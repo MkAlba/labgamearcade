@@ -36,9 +36,7 @@ class Game {
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.60), Math.floor(this.canvas.height* 0.10)),
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.70), Math.floor(this.canvas.height* 0.10)),    
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.10)),   
-              
-        ]; 
-        this.onGameEnd = onGameEnd;         
+        ];     
     }
 
     onKeyEvent(event) {        
@@ -75,26 +73,29 @@ class Game {
 
     move() {
         this.background.move();
-        this.spaceship.move();   
-
-        for (let i=0; i < this.enemies.length; i++) {                      
-            if(this.enemies[i].x + this.enemies[i].vx + this.enemies[i].width > this.ctx.canvas.width) {       
-                this.enemies.forEach(enemy => enemy.vx = -1) 
-                this.enemies.forEach(enemy => enemy.vy = GRAVITY)                               
+        this.spaceship.move();
+        this.enemies.forEach(enemy => {
+            if(enemy.x + enemy.vx + enemy.width > this.ctx.canvas.width){
+                this.moveRight();
+            } else if (enemy.x + enemy.vx < 0 ) {
+                this.moveLeft();
+            } else {
+                enemy.move()
             }
-            if(this.enemies[i].x + this.enemies[i].vx < 0 ) {
-                this.enemies.forEach(enemy => enemy.vx = 1)
-            }          
-            if(this.enemies[i].collidesWith(this.spaceship)){
-                this.endGame();
+            if(enemy.collidesWith(this.spaceship) || enemy.y + enemy.vy + enemy.height > this.ctx.canvas.height-this.spaceship.height - enemy.height){
+                this.stopGame();
             }
-            this.enemies[i].x += this.enemies[i].vx;   
-            this.enemies[i].y += this.enemies[i].vy;              
-        }  
+        });             
+    }
+    
+    moveRight() {
+        this.enemies.forEach(enemy => enemy.moveRight())
+    }
+    moveLeft() {
+        this.enemies.forEach(enemy => enemy.moveLeft())
     }
 
-    checkCollisions() { 
-             
+    checkCollisions() {              
         for (let i=0; i < this.enemies.length; i++) {
             let enemy = this.enemies[i]
             let collides = false;    
@@ -111,11 +112,13 @@ class Game {
             }
         }
     } 
+
     stopGame() {
         clearInterval(this.drawIntervalId);
-        this.drawIntervalId = undefined;
+        this.clear()
     }
+
     endGame() {
-        this.stopGame();        
+        this.stopGame()        
     }
 }

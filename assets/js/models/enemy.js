@@ -33,14 +33,12 @@ class Enemy {
         return this.sprite.isReady;
     }
 
-
- /*   if (this.autoFire = false) {
+    shootEnemy()  {
             this.enemyBullets.push(new Fireenemy(this.ctx, this.x + this.width/2, -this.y));
             this.autoFire = false;
-            setInterval(() => this.autoFire = true, 200) ;
-            console.log(this.enemyBullets)
-        }*/
-    
+            setInterval(() => this.autoFire = true, 1) ;
+            console.log(this.enemyBullets.length)
+        }   
     
     clear() {
         this.enemyBullets = this.enemyBullets.filter(enemyBullet => enemyBullet.y >= this.height)
@@ -73,22 +71,17 @@ class Enemy {
     
     move() {
         this.enemyBullets.forEach(enemyBullet => enemyBullet.move());
+        this.x += this.vx;
+        this.y += this.vy;
+      }
+    
+    moveRight(){            
+        this.vx = -1;
+        this.vy = GRAVITY
+    }  
 
-      //  if (this.y = this.maxY) {
-      //      this.y = this.maxY
-        
-        
-         /*  if(this.x + this.vx + this.width > this.ctx.canvas.width) {
-            this.vx = -1;
-            
-        }
-        if(this.x + this.vx < 0 ) {
-            this.vx = 1;
-        }
-        this.x += this.vx
-        
-        ;   */  
-    }
-
-}
+    moveLeft() {                                            
+        this.vx = 1
+    }           
+ }
 
