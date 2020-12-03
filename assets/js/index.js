@@ -11,4 +11,8 @@ document.addEventListener('keydown', (event) => {
     game.onKeyEvent(event);
     });
 
+document.addEventListener('click', (event) => {
+        game.onKeyEvent(event);
+        });
+
 })

@@ -36,11 +36,13 @@ class Game {
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.60), Math.floor(this.canvas.height* 0.10)),
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.70), Math.floor(this.canvas.height* 0.10)),    
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.10)),   
-        ];     
+        ];       
+        this.drawCount = 0;    
+        this.attackers = [];
     }
 
     onKeyEvent(event) {        
-        this.spaceship.onKeyEvent(event);
+        this.spaceship.onKeyEvent(event);    
     }
 
     start() {
@@ -49,15 +51,31 @@ class Game {
                 this.clear();
                 this.move();
                 this.draw();
-                this.checkCollisions();                
-            }, this.fps);
+                this.chooseAttackers()
+                this.attackersShoot();
+                this.checkCollisions();                       
+            },  this.fps);
         }
     }
 
+    chooseAttackers() {        
+        while (this.attackers.length < 3) {
+            let randomNumber = Math.floor(Math.random()*this.enemies.length)
+            this.attackers.push(this.enemies[randomNumber])
+        }
+    }
+   
+    attackersShoot() {  
+        this.attackers.forEach(enemy => {
+            enemy.shoot();
+            if(this.drawCount % 50)
+            enemy.shoot()})    
+    } 
+    
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.spaceship.clear();
-        this.enemies.forEach(enemy => enemy.clear()); 
+        this.enemies.forEach(enemy => enemy.clear());         
     }
 
     stop() {
@@ -69,7 +87,10 @@ class Game {
         this.background.draw();
         this.spaceship.draw();
         this.enemies.forEach(enemy => enemy.draw());
-    }
+        this.chooseAttackers();
+        this.attackersShoot();
+        this.drawCount++;
+        }
 
     move() {
         this.background.move();
@@ -111,8 +132,9 @@ class Game {
             this.enemies.splice(i, 1)  
             }
         }
-    } 
-
+        
+    
+ }
     stopGame() {
         clearInterval(this.drawIntervalId);
         this.clear()

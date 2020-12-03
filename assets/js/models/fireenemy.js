@@ -2,14 +2,13 @@ class Fireenemy {
     constructor(ctx, x, y) {
         this.ctx = ctx;
         this.x = x;
-        this.y = 0;
-        this.vy = -SPEED;
+        this.y = y;
+        this.vy = SPEED;
         
         this.sprite = new Image();
         this.sprite.src = 'assets/img/shootenemy.png'
         this.sprite.isReady = false;
         this.sprite.onload = () => {
-            console.log('onload');
             this.isReady = true;
             this.width = this.sprite.width;
             this.height = this.sprite.height;
@@ -29,6 +28,13 @@ class Fireenemy {
     }
 
     move() {
-        this.y -= this.vy         
+        this.y += this.vy         
     }
+
+    collidesWith(element) {
+        return this.x < element.x + element.width &&
+          this.x + this.width > element.x &&
+          this.y < element.y + element.height &&
+          this.y + this.height > element.y;
+        }
 }

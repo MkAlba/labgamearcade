@@ -8,8 +8,8 @@ class Spaceship {
         this.y = y;
         this.minY = 0;
 
-        this.width = 0;
-        this.height = 0;
+      //  this.width = 0;
+      //  this.height = 0;
 
         this.sprite = new Image();
         this.sprite.src = 'assets/img/spaceship.png';
@@ -61,7 +61,7 @@ class Spaceship {
                     this.sounds.fire.currentTime = 0;
                     this.sounds.fire.play();
                     this.canFire = false;
-                    setTimeout(() => this.canFire = true, 200) ;
+                    setTimeout(() => this.canFire = true, 100) ;
                  break;
                 }
         }
@@ -72,7 +72,6 @@ class Spaceship {
     }
 
     draw() {
-        console.log('bullets:', this.bullets.length)
         if(this.sprite.isReady) {
             this.ctx.drawImage (
                 this.sprite,

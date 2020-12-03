@@ -9,12 +9,10 @@ class Firespace {
         this.sprite.src = 'assets/img/shootspace.png'
         this.sprite.isReady = false;
         this.sprite.onload = () => {
-            console.log('onload')
             this.isReady = true;
             this.width = this.sprite.width;
             this.height = this.sprite.height;
-        }   
-        
+        }    
         this.drawCount = 0;
     }
 
