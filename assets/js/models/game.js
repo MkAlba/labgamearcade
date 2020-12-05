@@ -149,7 +149,7 @@ class Game {
    drawScore() {
         this.ctx.font = "20px Arial";
         this.ctx.fillStyle = "white";
-        this.ctx.fillText("NAME: " + document.getElementsByClassName('.player input'), this.ctx.canvas.width/3, 30)
+        this.ctx.fillText("NAME: " + document.getElementById('input-name').value, this.ctx.canvas.width/3, 30)
         this.ctx.fillText("Score: " + this.score, this.ctx.canvas.width/3, 50)
     }
 

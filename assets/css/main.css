@@ -5,6 +5,10 @@
     margin-right: auto;
 }
 
+.hidden {
+    display: none
+}
+
 .box-size {
     width: 650px;
     height: 850px;
@@ -26,10 +30,23 @@
     margin-right: 60px;
     margin-left: 60px;
 }
+
+#input-name {
+    text-decoration: none; 
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 200;
+    font-size: 25px;
+    color: black;    
+    border-radius: 15px;
+    border: 3px double #1e351f;
+    margin: 10px auto;
+    text-align: center;
+}
+
 #play-btn {
     text-decoration: none; 
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: 300;
+    font-weight: 200;
     font-size: 25px;
     color: black;
     background-color: #a35252;
@@ -37,19 +54,6 @@
     border: 3px double #1e351f;
     margin: 10px auto;
     text-align: center
-    
-}
-#input-name {
-    text-decoration: none; 
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: 300;
-    font-size: 25px;
-    color: black;
-    background-color: #a35252;
-    border-radius: 15px;
-    border: 3px double #1e351f;
-    margin: 10px auto;
-    text-align: center;
     
 }
 

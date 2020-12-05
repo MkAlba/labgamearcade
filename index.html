@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-    <div class="container ">
+    <div class="container" id="start-menu-container">
         <div id="start-page" class=" menu-container box-size"> 
-            <img id="logo" src="assets/img/retrogame.png" alt="logo"> 
+            <img id="logo" src="assets/img/retrogame.png" alt="logo">         
+            <input id="input-name" type="text" placeholder="What's your name?">
             <button  id="play-btn">READY TO REMEMBER?</button>        
-            <input type="text" placeholder="What's your name?" id="input-name">
         </div>
     </div>
-    <div class="container box-size">   
+    <div id="canvas-container" class="hidden container box-size">   
         <canvas id="canvas-game"></canvas>
     </div>
     <script src="assets/js/models/constants.js"></script>
