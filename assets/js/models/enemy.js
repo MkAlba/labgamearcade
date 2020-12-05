@@ -26,7 +26,7 @@ class Enemy {
     };
     this.drawCount = 0;
 
-    this.enemyBullets = [];
+    this.bullets = [];
   }
 
   isReady() {
@@ -34,16 +34,18 @@ class Enemy {
   }
 
   shoot() {
-    if (this.enemyBullets.length < 1) {
-      this.enemyBullets.push(
-        new Fireenemy(this.ctx, this.x + this.width / 2, this.y + this.height)
-      );
+    if (this.bullets.length < 1)   {
+      this.bullets.push(new Fireenemy(this.ctx, this.x + this.width / 2, this.y + this.height));  
     }
-  }
+  }  
+    //   
+   // let intervalShoot = setInterval(() => {
+   //    this.bullets.push(new Fireenemy(this.ctx, this.x + this.width / 2, this.y + this.height));}, 2000);
+   //     setTimeout(() => {clearInterval(intervalShoot);},2100);
 
   clear() {
-    this.enemyBullets = this.enemyBullets.filter(
-      (enemyBullet) => enemyBullet.y <= this.ctx.canvas.height
+    this.bullets = this.bullets.filter(
+      (bullet) => bullet.y <= this.ctx.canvas.height
     );
   }
 
@@ -60,7 +62,7 @@ class Enemy {
         this.width,
         this.height
       );
-      this.enemyBullets.forEach((enemyBullet) => enemyBullet.draw());
+      this.bullets.forEach((bullet) => bullet.draw());
       this.drawCount++;
     }
   }
@@ -75,7 +77,7 @@ class Enemy {
   }
 
   move() {
-    this.enemyBullets.forEach((enemyBullet) => enemyBullet.move());
+    this.bullets.forEach((bullet) => bullet.move());
     this.x += this.vx;
     this.y += this.vy;
   }
@@ -88,4 +90,15 @@ class Enemy {
   moveLeft() {
     this.vx = 1;
   }
+
+ /* animateShoot() {    
+    this.sprite.horizontalFrameIndex = 2;
+    this.sprite.verticalFrameIndex = 0;
+  }  
+
+  resetAnimation() {
+    this.sprite.horizontalFrameIndex = 0;
+    this.sprite.verticalFrameIndex = 0;
+ }*/
+
 }

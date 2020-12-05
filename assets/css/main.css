@@ -1,0 +1,12 @@
+canvas {
+    border: 2px solid #c90808;
+}
+.foto {
+    background-image: url("../images/landing.jpg");
+    background-size: cover;
+    height: 900px;
+    width: 100%;  
+    color:#FFF; 
+    text-align: center;
+    position: relative;
+}

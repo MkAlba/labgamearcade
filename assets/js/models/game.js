@@ -37,8 +37,10 @@ class Game {
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.70), Math.floor(this.canvas.height* 0.10)),    
             new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.10)),   
         ];       
+        
         this.drawCount = 0;    
         this.attackers = [];
+        this.score = 0;
     }
 
     onKeyEvent(event) {        
@@ -59,18 +61,16 @@ class Game {
     }
 
     chooseAttackers() {        
-        while (this.attackers.length < 3) {
+        for (let i = 0; this.attackers.length < 3; i++) {
             let randomNumber = Math.floor(Math.random()*this.enemies.length)
             this.attackers.push(this.enemies[randomNumber])
-        }
+       }
     }
-   
+    
     attackersShoot() {  
         this.attackers.forEach(enemy => {
-            enemy.shoot();
-            if(this.drawCount % 50)
-            enemy.shoot()})    
-    } 
+            enemy.shoot()})  
+    }   
     
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -90,6 +90,7 @@ class Game {
         this.chooseAttackers();
         this.attackersShoot();
         this.drawCount++;
+        this.drawScore();
         }
 
     move() {
@@ -104,7 +105,7 @@ class Game {
                 enemy.move()
             }
             if(enemy.collidesWith(this.spaceship) || enemy.y + enemy.vy + enemy.height > this.ctx.canvas.height-this.spaceship.height - enemy.height){
-                this.stopGame();
+                this.endGame();
             }
         });             
     }
@@ -124,23 +125,40 @@ class Game {
                 let bullet = this.spaceship.bullets[j]
                 if (bullet.collidesWith(enemy)) {
                     collides = true;
-                    this.spaceship.bullets.splice(j,1);
+                    this.spaceship.bullets.splice(j,1);                    
                     break;
                 }
             }
             if (collides) {
-            this.enemies.splice(i, 1)  
+            this.enemies.splice(i, 1);
+            this.chooseAttackers();
+            this.score++;
+            }            
+        }                  
+        for (let i=0; i < this.attackers.length; i++) {
+            let attacker = this.attackers[i]
+            attacker.bullets.forEach(bullet => {
+                if (bullet.collidesWith(this.spaceship)) {
+                    this.stopGame();
+                }
             }
-        }
-        
-    
- }
+            )  
+        } 
+    }
+
+   drawScore() {
+        this.ctx.font = "20px Arial";
+        this.ctx.fillStyle = "white";
+        this.ctx.fillText("NAME: " + document.getElementsByClassName('.player input'), this.ctx.canvas.width/3, 30)
+        this.ctx.fillText("Score: " + this.score, this.ctx.canvas.width/3, 50)
+    }
+
     stopGame() {
         clearInterval(this.drawIntervalId);
-        this.clear()
     }
 
     endGame() {
-        this.stopGame()        
+        this.stopGame() 
+        this.clear()       
     }
 }
