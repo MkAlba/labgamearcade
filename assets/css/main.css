@@ -1,12 +1,58 @@
-canvas {
-    border: 2px solid #c90808;
+.container {
+    display: flex;
+     
+    margin-left: auto;
+    margin-right: auto;
 }
-.foto {
-    background-image: url("../images/landing.jpg");
-    background-size: cover;
-    height: 900px;
-    width: 100%;  
-    color:#FFF; 
+
+.box-size {
+    width: 650px;
+    height: 850px;
+}
+
+.menu-container {          
+    background-color: rgb(20, 20, 48); 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#start-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;      
+}
+
+#logo {
+    margin-right: 60px;
+    margin-left: 60px;
+}
+#play-btn {
+    text-decoration: none; 
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 25px;
+    color: black;
+    background-color: #a35252;
+    border-radius: 15px;
+    border: 3px double #1e351f;
+    margin: 10px auto;
+    text-align: center
+    
+}
+#input-name {
+    text-decoration: none; 
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 25px;
+    color: black;
+    background-color: #a35252;
+    border-radius: 15px;
+    border: 3px double #1e351f;
+    margin: 10px auto;
     text-align: center;
-    position: relative;
+    
 }
+
+
+
+

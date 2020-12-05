@@ -7,28 +7,23 @@
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-
-    <div class = "inicio">  
-        <div>
-          <h1>PHOENIX ARCADE</h1>       
-            <p>Lo clásico vuelve!!!</p>
-            <p>Como te llamas?</p> 
-            <p><input class = "player" type="text" value="manuel"></p>
-           
-            
+    <div class="container ">
+        <div id="start-page" class=" menu-container box-size"> 
+            <img id="logo" src="assets/img/retrogame.png" alt="logo"> 
+            <button  id="play-btn">READY TO REMEMBER?</button>        
+            <input type="text" placeholder="What's your name?" id="input-name">
         </div>
-      </div>
-
-    <canvas id="canvas-game"></canvas>
-
-
-<script src="assets/js/models/constants.js"></script>
-<script src="assets/js/models/fireenemy.js"></script>
-<script src="assets/js/models/enemy.js"></script>
-<script src="assets/js/models/background.js"></script>  
-<script src="assets/js/models/firespace.js"></script>
-<script src="assets/js/models/spaceship.js"></script>  
-<script src="assets/js/models/game.js"></script>
-<script src="assets/js/index.js"></script>
+    </div>
+    <div class="container box-size">   
+        <canvas id="canvas-game"></canvas>
+    </div>
+    <script src="assets/js/models/constants.js"></script>
+    <script src="assets/js/models/fireenemy.js"></script>
+    <script src="assets/js/models/enemy.js"></script>
+    <script src="assets/js/models/background.js"></script>  
+    <script src="assets/js/models/firespace.js"></script>
+    <script src="assets/js/models/spaceship.js"></script>  
+    <script src="assets/js/models/game.js"></script>
+    <script src="assets/js/index.js"></script>
 </body>
 </html>
