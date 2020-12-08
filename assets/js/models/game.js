@@ -1,164 +1,393 @@
 class Game {
-    constructor(canvasId, onGameEnd) {
-        this.canvas = document.getElementById(canvasId);
-        this.canvas.width = 650;
-        this.canvas.height = 850;
-        this.ctx = this.canvas.getContext('2d');
-        
-        this.fps = 1000/60;
-        this.intervalId = undefined;
-        
-        this.background = new Background(this.ctx);
-        this.spaceship = new Spaceship(this.ctx, this.canvas.width/2, 780);
+  constructor(canvasId, onGameEnd) {
+    this.canvas = document.getElementById(canvasId);
+    this.canvas.width = 650;
+    this.canvas.height = 850;
+    this.ctx = this.canvas.getContext("2d");
 
-        this.enemies = [
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.10), Math.floor(this.canvas.height* 0.20)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.20), Math.floor(this.canvas.height* 0.20)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.30), Math.floor(this.canvas.height* 0.20)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.40), Math.floor(this.canvas.height* 0.20)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.50), Math.floor(this.canvas.height* 0.20)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.60), Math.floor(this.canvas.height* 0.20)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.70), Math.floor(this.canvas.height* 0.20)),    
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.20)),  
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.10), Math.floor(this.canvas.height* 0.15)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.20), Math.floor(this.canvas.height* 0.15)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.30), Math.floor(this.canvas.height* 0.15)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.40), Math.floor(this.canvas.height* 0.15)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.50), Math.floor(this.canvas.height* 0.15)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.60), Math.floor(this.canvas.height* 0.15)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.70), Math.floor(this.canvas.height* 0.15)),    
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.15)), 
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.10), Math.floor(this.canvas.height* 0.10)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.20), Math.floor(this.canvas.height* 0.10)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.30), Math.floor(this.canvas.height* 0.10)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.40), Math.floor(this.canvas.height* 0.10)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.50), Math.floor(this.canvas.height* 0.10)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.60), Math.floor(this.canvas.height* 0.10)),
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.70), Math.floor(this.canvas.height* 0.10)),    
-            new Enemy(this.ctx, Math.floor(this.canvas.width * 0.80), Math.floor(this.canvas.height* 0.10)),   
-        ];       
-        
-        this.drawCount = 0;    
-        this.attackers = [];
-        this.score = 0;
-    }
+    this.fps = 1000 / 60;
+    this.drawIntervalId = undefined;
 
-    onKeyEvent(event) {        
-        this.spaceship.onKeyEvent(event);    
-    }
+    this.background = new Background(this.ctx);
+    this.spaceship = new Spaceship(this.ctx, this.canvas.width / 2, 780);
 
-    start() {
-        if(!this.drawIntervalId) {
-            this.drawIntervalId = setInterval(() => { 
-                this.clear();
-                this.move();
-                this.draw();
-                this.chooseAttackers()
-                this.attackersShoot();
-                this.checkCollisions();                       
-            },  this.fps);
-        }
-    }
+    this.enemies = [
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.1),
+        Math.floor(this.canvas.height * 0.2)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.2),
+        Math.floor(this.canvas.height * 0.2)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.3),
+        Math.floor(this.canvas.height * 0.2)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.4),
+        Math.floor(this.canvas.height * 0.2)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.5),
+        Math.floor(this.canvas.height * 0.2)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.6),
+        Math.floor(this.canvas.height * 0.2)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.7),
+        Math.floor(this.canvas.height * 0.2)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.8),
+        Math.floor(this.canvas.height * 0.2)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.1),
+        Math.floor(this.canvas.height * 0.15)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.2),
+        Math.floor(this.canvas.height * 0.15)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.3),
+        Math.floor(this.canvas.height * 0.15)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.4),
+        Math.floor(this.canvas.height * 0.15)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.5),
+        Math.floor(this.canvas.height * 0.15)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.6),
+        Math.floor(this.canvas.height * 0.15)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.7),
+        Math.floor(this.canvas.height * 0.15)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.8),
+        Math.floor(this.canvas.height * 0.15)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.1),
+        Math.floor(this.canvas.height * 0.1)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.2),
+        Math.floor(this.canvas.height * 0.1)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.3),
+        Math.floor(this.canvas.height * 0.1)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.4),
+        Math.floor(this.canvas.height * 0.1)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.5),
+        Math.floor(this.canvas.height * 0.1)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.6),
+        Math.floor(this.canvas.height * 0.1)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.7),
+        Math.floor(this.canvas.height * 0.1)
+      ),
+      new Enemy(
+        this.ctx,
+        Math.floor(this.canvas.width * 0.8),
+        Math.floor(this.canvas.height * 0.1)
+      ),
+    ];
+    this.crazyEnemies = [];
+    this.drawCount = 0;
+    this.attackers = [];
 
-    chooseAttackers() {        
-        for (let i = 0; this.attackers.length < 3; i++) {
-            let randomNumber = Math.floor(Math.random()*this.enemies.length)
-            this.attackers.push(this.enemies[randomNumber])
-       }
-    }
-    
-    attackersShoot() {  
-        this.attackers.forEach(enemy => {
-            enemy.shoot()})  
-    }   
-    
-    clear() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.spaceship.clear();
-        this.enemies.forEach(enemy => enemy.clear());         
-    }
+    this.bigEnemies= [];
 
-    stop() {
-        clearInterval(this.drawIntervalID);
-        this.drawIntervalID = undefined;
-    }
+    this.score = 0;
+    this.bestScore = Number(localStorage.getItem("best-score") || 0);
+  }
 
-    draw() {
-        this.background.draw();
-        this.spaceship.draw();
-        this.enemies.forEach(enemy => enemy.draw());
+  onKeyEvent(event) {
+    this.spaceship.onKeyEvent(event);
+  }
+
+  start() {
+    if (!this.drawIntervalId) {
+      this.drawIntervalId = setInterval(() => {
+        this.clear();
+        this.move();
+        this.draw();
         this.chooseAttackers();
         this.attackersShoot();
-        this.drawCount++;
-        this.drawScore();
-        }
-
-    move() {
-        this.background.move();
-        this.spaceship.move();
-        this.enemies.forEach(enemy => {
-            if(enemy.x + enemy.vx + enemy.width > this.ctx.canvas.width){
-                this.moveRight();
-            } else if (enemy.x + enemy.vx < 0 ) {
-                this.moveLeft();
-            } else {
-                enemy.move()
-            }
-            if(enemy.collidesWith(this.spaceship) || enemy.y + enemy.vy + enemy.height > this.ctx.canvas.height-this.spaceship.height - enemy.height){
-                this.endGame();
-            }
-        });             
+        this.chooseCrazyEnemies();
+        this.checkCollisions();
+        this.bigEnemiesShoot()
+        
+      }, this.fps);
     }
+  }
+
+  restart() {
+    this.score = 0;
+    this.attackers = [];
+    this.start();
+  }
+
+  chooseAttackers() {
+    if (this.enemies.length === 16){ 
+    for (let i = 0; this.attackers.length < 3; i++) {
+      let randomNumber = Math.floor(Math.random() * this.enemies.length);
+      this.attackers.push(this.enemies[randomNumber]);
+
+    }
+    }
+  }
+
+  attackersShoot() {
+    this.attackers.forEach((enemy) => {
+      enemy.shoot();
+    })
+  }
+  bigEnemiesShoot() {
+    this.bigEnemies.forEach((bigEnemy) => {
+      bigEnemy.shoot();
+    })
+  }
+ 
+
+  chooseCrazyEnemies() {
     
-    moveRight() {
-        this.enemies.forEach(enemy => enemy.moveRight())
+    if (this.enemies.length === 16) { 
+    for (let i = 0; this.crazyEnemies.length < 3; i++) {
+      let randomNumber = Math.floor(Math.random() * this.enemies.length);
+      this.crazyEnemies.push(this.enemies[randomNumber])}            
     }
-    moveLeft() {
-        this.enemies.forEach(enemy => enemy.moveLeft())
+   // console.log(this.crazyEnemies)
+   // console.log(this.enemies)
+    //console.log(this.attackers)
+   // console.log(this.bigEnemies)
+
+
+    
+  }
+
+  clear() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.spaceship.clear();
+    this.enemies.forEach((enemy) => enemy.clear());
+    this.attackers.forEach((attacker) => attacker.clear());
+    this.crazyEnemies.forEach((crazyEnemy) => crazyEnemy.clear());
+    this.bigEnemies.forEach((bigEnemy) => bigEnemy.clear()); 
+  }
+
+  draw() {
+    this.background.draw();
+    this.spaceship.draw();
+    this.enemies.forEach((enemy) => enemy.draw());
+    this.attackers.forEach((attacker) => attacker.draw());  
+    this.crazyEnemies.forEach((crazyEnemy) => crazyEnemy.draw());
+    this.bigEnemies.forEach((bigEnemy) => bigEnemy.draw());
+    this.drawCount++;
+    this.drawScore();
+  }
+
+  move() {
+    this.background.move();
+    this.spaceship.move();
+    
+    this.enemies.forEach((enemy) => {
+      if (enemy.x + enemy.vx + enemy.width > this.ctx.canvas.width) {
+        this.moveRight();       
+      } else if (enemy.x + enemy.vx < 0) {
+        this.moveLeft();
+      } else {
+        enemy.move();
+      }
+      if (
+        enemy.collidesWith(this.spaceship) ||
+        enemy.y + enemy.vy + enemy.height >
+          this.ctx.canvas.height - this.spaceship.height - enemy.height
+      ) {
+        this.stopGame();
+      }
+    });
+    this.bigEnemies.forEach((bigEnemy) => {
+    if (bigEnemy.x + bigEnemy.vx + bigEnemy.width > this.ctx.canvas.width) {
+      this.moveRight();
+      this.moveRandom();       
+     } else if (bigEnemy.x + bigEnemy.vx < 0) {
+      this.moveLeft();
+      this.moveRandom();
+     }  else {
+      bigEnemy.move();
     }
 
-    checkCollisions() {              
-        for (let i=0; i < this.enemies.length; i++) {
-            let enemy = this.enemies[i]
-            let collides = false;    
-            for (let j=0; j < this.spaceship.bullets.length; j++) {
-                let bullet = this.spaceship.bullets[j]
-                if (bullet.collidesWith(enemy)) {
-                    collides = true;
-                    this.spaceship.bullets.splice(j,1);                    
-                    break;
-                }
-            }
-            if (collides) {
-            this.enemies.splice(i, 1);
-            this.chooseAttackers();
-            this.score++;
-            }            
-        }                  
-        for (let i=0; i < this.attackers.length; i++) {
-            let attacker = this.attackers[i]
-            attacker.bullets.forEach(bullet => {
-                if (bullet.collidesWith(this.spaceship)) {
-                    this.stopGame();
-                }
-            }
-            )  
-        } 
+       } ) 
+      
+  }
+  
+  moveRandom() {
+    this.bigEnemies.forEach((bigEnemy) => bigEnemy.moveRandom());
+  }
+  moveRight() {
+    this.enemies.forEach((enemy) => enemy.moveRight());
+    this.bigEnemies.forEach((bigEnemy) => bigEnemy.moveRight());
+  }
+  moveLeft() {
+    this.enemies.forEach((enemy) => enemy.moveLeft());
+    this.bigEnemies.forEach((bigEnemy) => bigEnemy.moveLeft());
+  }
+ 
+  checkCollisions() {
+    for (let i = 0; i < this.enemies.length; i++) {
+      let enemy = this.enemies[i];
+      let collides = false;
+      for (let j = 0; j < this.spaceship.bullets.length; j++) {
+        let bullet = this.spaceship.bullets[j];
+        if (bullet.collidesWith(enemy)) {
+          collides = true;
+          this.spaceship.bullets.splice(j, 1);
+          break;
+        }
+      }
+      if (collides) {
+        this.enemies.splice(i, 1);        
+        this.score++;
+        if(this.enemies.length === 1) {
+          this.generateBigEnemy();
+        }
+      }
     }
+    for (let i = 0; i < this.crazyEnemies.length; i++) {
+      let crazy = this.crazyEnemies[i];
+      let collides = false;
+      for (let j = 0; j < this.spaceship.bullets.length; j++) {
+        let bullet = this.spaceship.bullets[j];
+        if (bullet.collidesWith(crazy)) {
+          collides = true;
+          this.spaceship.bullets.splice(j, 1);
+          break;
+        }
+      }
+      if (collides) {
+        this.crazyEnemies.splice(i, 1);
+        this.score++;
+      }
+    }
+    for (let i = 0; i < this.attackers.length; i++) {
+      let attack = this.attackers[i];
+      let collides = false;
+      for (let j = 0; j < this.spaceship.bullets.length; j++) {
+        let bullet = this.spaceship.bullets[j];
+        if (bullet.collidesWith(attack)) {
+          collides = true;
+          this.spaceship.bullets.splice(j, 1);
+          break;
+        }
+      }
+      if (collides) {
+        this.attackers.splice(i, 1);
+        this.score++;
+      }}
 
-   drawScore() {
-        this.ctx.font = "20px Arial";
-        this.ctx.fillStyle = "white";
-        this.ctx.fillText("NAME: " + document.getElementById('input-name').value, this.ctx.canvas.width/3, 30)
-        this.ctx.fillText("Score: " + this.score, this.ctx.canvas.width/3, 50)
+      for (let i = 0; i < this.bigEnemies.length; i++) {
+        let bigEnemy = this.bigEnemies[i];
+        let collides = false;
+        for (let j = 0; j < this.spaceship.bullets.length; j++) {
+          let bullet = this.spaceship.bullets[j];
+          if (bullet.collidesWith(bigEnemy)) {
+            collides = true;
+            this.spaceship.bullets.splice(j, 1);
+            break;
+          }
+        }
+        if (collides) {
+          this.bigEnemies.splice(i, 1);
+          this.score++;
+        }}
+    
+    for (let i = 0; i < this.attackers.length; i++) {
+      let attacker = this.attackers[i];
+      attacker.bullets.forEach((bullet) => {
+        if (bullet.collidesWith(this.spaceship)) {
+          this.stopGame();
+        }
+      });
     }
+    for (let i = 0; i < this.bigEnemies.length; i++) {
+      let bigEnemy = this.bigEnemies[i];
+      bigEnemy.bullets.forEach((bullet) => {
+        if (bullet.collidesWith(this.spaceship)) {
+          this.stopGame();
+        }
+      });
+    }
+  }
 
-    stopGame() {
-        clearInterval(this.drawIntervalId);
-    }
+  drawScore() {
+    this.ctx.font = "20px Arial";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText(
+      "NAME: " + document.getElementById("input-name").value,
+      this.ctx.canvas.width / 3,
+      30
+    );
+    this.ctx.fillText("Score: " + this.score, this.ctx.canvas.width / 3, 50);
+  }
 
-    endGame() {
-        this.stopGame() 
-        this.clear()       
-    }
+  stopGame() {
+    clearInterval(this.drawIntervalId);
+    this.drawIntervalID = undefined;
+    this.ctx.font = "40px Arial"
+    this.ctx.fillStyle = "white"
+    this.ctx.fillText('GAME OVER',120,150)
+    this.ctx.fillText("Game Score: " + this.enemies.length, 120,200)
+  }
+
+  endGame() {
+    this.stopGame();
+  }
+
+  generateBigEnemy(){          
+        this.bigEnemies.push(new bigEnemy(this.ctx,0,0));    
+        this.bigEnemies.push(new bigEnemy(this.ctx,this.canvas.width/2,0))
+        this.bigEnemies.push(new bigEnemy(this.ctx,this.canvas.width/3,0))
+        this.bigEnemies.push(new bigEnemy(this.ctx,this.canvas.width/4,0))
+}
 }

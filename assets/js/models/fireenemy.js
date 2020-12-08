@@ -1,40 +1,36 @@
 class Fireenemy {
-    constructor(ctx, x, y) {
-        this.ctx = ctx;
-        this.x = x;
-        this.y = y;
-        this.vy = SPEED;
-        
-        this.sprite = new Image();
-        this.sprite.src = 'assets/img/shootenemy.png'
-        this.sprite.isReady = false;
-        this.sprite.onload = () => {
-            this.isReady = true;
-            this.width = this.sprite.width;
-            this.height = this.sprite.height;
-        }         
-        this.drawCount = 0;         
-    }
+  constructor(ctx, x, y) {
+    this.ctx = ctx;
+    this.x = x;
+    this.y = y;
+    this.vy = SPEED;
 
-    draw() {  
-        this.ctx.drawImage (
-            this.sprite,
-            this.x,
-            this.y,
-            this.width,
-            this.height,
-        )
-        this.drawCount++;
-    }
+    this.sprite = new Image();
+    this.sprite.src = "assets/img/shootenemy.png";
+    this.sprite.isReady = false;
+    this.sprite.onload = () => {
+      this.isReady = true;
+      this.width = this.sprite.width;
+      this.height = this.sprite.height;
+    };
+    this.drawCount = 0;
+  }
 
-    move() {
-        this.y += this.vy         
-    }
+  draw() {
+    this.ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height);
+    this.drawCount++;
+  }
 
-    collidesWith(element) {
-        return this.x < element.x + element.width &&
-          this.x + this.width > element.x &&
-          this.y < element.y + element.height &&
-          this.y + this.height > element.y;
-        }
+  move() {
+    this.y += this.vy;
+  }
+
+  collidesWith(element) {
+    return (
+      this.x < element.x + element.width &&
+      this.x + this.width > element.x &&
+      this.y < element.y + element.height &&
+      this.y + this.height > element.y
+    );
+  }
 }

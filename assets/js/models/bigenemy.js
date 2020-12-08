@@ -1,17 +1,17 @@
-class Enemy {
+class bigEnemy {
   constructor(ctx, x, y) {
     this.ctx = ctx;
     this.x = x;
-    this.vx = 1;
+    this.vx = 2;
     this.y = y;
-    this.vy = 0;
+    this.vy = 2;
 
     this.sprite = new Image();
-    this.sprite.src = "assets/img/enemies.png";
+    this.sprite.src = "assets/img/bigenemies.png";
     this.sprite.isReady = false;
-    this.sprite.horizontalFrameIndex = 3;
+    this.sprite.horizontalFrameIndex = 0;
     this.sprite.verticalFrameIndex = 0;
-    this.sprite.horizontalFrames = 4;
+    this.sprite.horizontalFrames = 3;
     this.sprite.verticalFrames = 1;
     this.sprite.onload = () => {
       this.sprite.isReady = true;
@@ -62,6 +62,7 @@ class Enemy {
       );
       this.bullets.forEach((bullet) => bullet.draw());
       this.drawCount++;
+      this.animate();
     }
   }
 
@@ -78,15 +79,47 @@ class Enemy {
     this.bullets.forEach((bullet) => bullet.move());
     this.x += this.vx;
     this.y += this.vy;
+    /*this.x += this.vx * Math.floor(Math.random(drawCount*Math.PI/90)*5);
+      console.log(this.x)
+      
+      this.y += this.vy * MAth.floor(Math.random(drawCount*Math.PI/90)*5);*/
   }
 
+  moveRandom() {
+   
+    var stepSize = Math.floor(Math.random(-10, 10));
+ 
+    var xStepSize = Math.floor(Math.random(-stepSize, stepSize));
+    var yStepSize = Math.floor(Math.random(-stepSize, stepSize));
+ 
+    this.vx += xStepSize;
+    this.vy += yStepSize;
+
+  }
   moveRight() {
-    this.vx = -1;
-    this.vy = GRAVITY;
+    this.vx = -2;
+    this.vy = 2*GRAVITY;
   }
 
   moveLeft() {
-    this.vx = 1;
+    this.vx = 2;
+  }
+  
+
+  animate() {
+    
+      this.animateSprite(0, 0, 3, 5);
+  
+  }
+
+  animateSprite(initVerticalFrame, initHorizontalFrame, segments, frequency) {
+    if (this.sprite.verticalFrameIndex !== initVerticalFrame) {
+      this.sprite.verticalFrameIndex = initVerticalFrame;
+      this.sprite.horizontalFrameIndex = initHorizontalFrame;
+    } else if (this.drawCount % frequency === 0) {
+      this.sprite.horizontalFrameIndex =
+        (this.sprite.horizontalFrameIndex + 1) % segments;
+      this.drawCount = 0;
+    }
   }
 }
-
