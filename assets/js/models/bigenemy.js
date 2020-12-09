@@ -79,35 +79,21 @@ class bigEnemy {
     this.bullets.forEach((bullet) => bullet.move());
     this.x += this.vx;
     this.y += this.vy;
-    /*this.x += this.vx * Math.floor(Math.random(drawCount*Math.PI/90)*5);
-      console.log(this.x)
-      
-      this.y += this.vy * MAth.floor(Math.random(drawCount*Math.PI/90)*5);*/
-  }
-
-  moveRandom() {
-   
-    var stepSize = Math.floor(Math.random(-10, 10));
- 
-    var xStepSize = Math.floor(Math.random(-stepSize, stepSize));
-    var yStepSize = Math.floor(Math.random(-stepSize, stepSize));
- 
-    this.vx += xStepSize;
-    this.vy += yStepSize;
-
-  }
+     }
   moveRight() {
     this.vx = -2;
-    this.vy = 2*GRAVITY;
+    this.vy = GRAVITYBIG;
   }
 
   moveLeft() {
     this.vx = 2;
   }
-  
 
-  animate() {
+  moveRandom () {
     
+  }
+
+   animate() {    
       this.animateSprite(0, 0, 3, 5);
   
   }
