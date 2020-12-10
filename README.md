@@ -1,4 +1,4 @@
 # labgamearcade
 Phoenix Game
-https://mkalba.github.io/labgamearcade/html
+https://MkAlba.github.io/labgamearcade/html
 
