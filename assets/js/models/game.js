@@ -41,7 +41,7 @@ class Game {
         this.chooseCrazyEnemies();
         this.checkCollisions();
         this.bigEnemiesShoot();
-      }, this.fps);
+         }, this.fps);
     }
   }
   restart() {
@@ -231,6 +231,7 @@ class Game {
     this.crazyEnemies.forEach((crazyEnemy) => crazyEnemy.draw());
     this.bigEnemies.forEach((bigEnemy) => bigEnemy.draw());
     this.drawCount++;
+    
     this.drawScore();
   }
 
@@ -290,7 +291,7 @@ class Game {
   moveLeft() {
     this.enemies.forEach((enemy) => enemy.moveLeft());
     this.attackers.forEach((attacker) => attacker.moveLeft());
-    this.crazyEnemies.forEach((crazyEnemy) => crazyEnemy.moveLeft());
+    //this.crazyEnemies.forEach((crazyEnemy) => crazyEnemy.moveLeft());
     this.bigEnemies.forEach((bigEnemy) => bigEnemy.moveLeft());
   }
 
@@ -315,10 +316,10 @@ class Game {
       }
       if (
         enemy.collidesWith(this.spaceship) ||
-        enemy.y + enemy.vy + enemy.height >
-          this.ctx.canvas.height - this.spaceship.height - enemy.height
+        (enemy.y + enemy.vy + enemy.height) >
+          (this.ctx.canvas.height - this.spaceship.height - enemy.height)
       ) {
-        this.stopGame();
+           this.stopGame();
       }
     }
     for (let i = 0; i < this.crazyEnemies.length; i++) {
@@ -338,8 +339,8 @@ class Game {
       }
       if (
         crazy.collidesWith(this.spaceship) ||
-        crazy.y + crazy.vy + crazy.height >
-          this.ctx.canvas.height - this.spaceship.height - crazy.height
+        (crazy.y + crazy.vy + crazy.height) >
+          (this.ctx.canvas.height - this.spaceship.height - crazy.height)
       ) {
         this.stopGame();
       }
@@ -358,6 +359,13 @@ class Game {
       if (collides) {
         this.attackers.splice(i, 1);
         this.score++;
+      }
+      if (
+        attack.collidesWith(this.spaceship) ||
+        (attack.y + attack.vy + attack.height) >
+          (this.ctx.canvas.height - this.spaceship.height - attack.height)
+      ) {
+        this.stopGame();
       }
     }
 
@@ -395,13 +403,14 @@ class Game {
         }
       });
       if (
-        bigEnemy.collidesWith(this.spaceship) ||
-        bigEnemy.y + bigEnemy.vy + bigEnemy.height >
+        (bigEnemy.collidesWith(this.spaceship) ||
+        (bigEnemy.y + bigEnemy.vy + bigEnemy.height)) >
           this.ctx.canvas.height - this.spaceship.height - bigEnemy.height
       ) {
         this.stopGame();
       }
     }
+    this.continuesGame();
   }
 
   drawScore() {
@@ -416,19 +425,10 @@ class Game {
   }
 
   continuesGame() {
-    this.ctx.font = "20px Arial";
-    this.ctx.fillStyle = "white";
-    this.ctx.fillText(
-      "NAME: " + document.getElementById("input-name").value,
-      this.ctx.canvas.width / 3,
-      30
-    );
-    this.ctx.fillText("Score: " + this.score, this.ctx.canvas.width / 3, 50);
-    this.ctx.fillText(
-      "YOU ARE A TOP RETRO PERSON!! CONGRATULATION??" + this.score,
-      this.ctx.canvas.width / 3,
-      50
-    );
+    if (this.bigEnemies.length ===0 && this.enemies.length === 0) {
+      this.restart();
+      this.score += 28;
+    }
   }
 
   stopGame() {
@@ -447,7 +447,14 @@ class Game {
       (this.ctx.canvas.width - 240) / 2,
       this.ctx.canvas.height / 2
     );
-    this.onGameEnd(this.score);
+    setTimeout (() => {this.onGameEnd(this.score)}, 4000);
+    
+    const tBody = document.getElementById('end-menu-container');
+    const newTR = document.createElement('tr');
+    newTR.classList.add('score')
+    newTR.innerHTML = `
+    <td class="name"><span>${(this.score)}</span></td>`;
+  tBody.appendChild(newTR)
   }
 
   generateBigEnemy() {

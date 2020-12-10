@@ -55,6 +55,19 @@
     text-align: center
     
 }
+#replay-btn {
+    text-decoration: none; 
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 200;
+    font-size: 25px;
+    color: black;
+    background-color: green;
+    border: 3px double #1e351f;
+    margin: 10px auto;
+    text-align: center
+    
+}
+
 
 
 
