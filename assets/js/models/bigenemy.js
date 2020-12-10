@@ -79,7 +79,7 @@ class bigEnemy {
     this.bullets.forEach((bullet) => bullet.move());
     this.x += this.vx;
     this.y += this.vy;
-     }
+  }
   moveRight() {
     this.vx = -2;
     this.vy = GRAVITYBIG;
@@ -89,13 +89,10 @@ class bigEnemy {
     this.vx = 2;
   }
 
-  moveRandom () {
-    
-  }
+  moveRandom() {}
 
-   animate() {    
-      this.animateSprite(0, 0, 3, 5);
-  
+  animate() {
+    this.animateSprite(0, 0, 3, 5);
   }
 
   animateSprite(initVerticalFrame, initHorizontalFrame, segments, frequency) {

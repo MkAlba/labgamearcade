@@ -79,7 +79,7 @@ class Enemy {
     this.x += this.vx;
     this.y += this.vy;
   }
-/*  moveTo(a,b) {
+  /*  moveTo(a,b) {
       this.x += a;
       this.y += b;
   }*/
@@ -93,4 +93,3 @@ class Enemy {
     this.vx = 1;
   }
 }
-

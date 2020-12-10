@@ -41,7 +41,7 @@ class Game {
         this.chooseCrazyEnemies();
         this.checkCollisions();
         this.bigEnemiesShoot();
-         }, this.fps);
+      }, this.fps);
     }
   }
   restart() {
@@ -203,15 +203,11 @@ class Game {
   chooseCrazyEnemies() {
     if (this.enemies.length === 21) {
       for (let i = 0; this.crazyEnemies.length < 3; i++) {
-        let randomEnemyIndex = Math.floor(Math.random() * this.enemies.length);
-        this.crazyEnemies.push(this.enemies[randomEnemyIndex]);
-        this.enemies.splice(randomEnemyIndex, 1);
+        let randomNumber = Math.floor(Math.random() * this.enemies.length);
+        this.crazyEnemies.push(this.enemies[randomNumber]);
+        this.enemies.splice(randomNumber, 1);
       }
     }
-    console.log(this.crazyEnemies);
-    console.log(this.enemies);
-    console.log(this.attackers);
-    // console.log(this.bigEnemies)
   }
 
   clear() {
@@ -231,7 +227,7 @@ class Game {
     this.crazyEnemies.forEach((crazyEnemy) => crazyEnemy.draw());
     this.bigEnemies.forEach((bigEnemy) => bigEnemy.draw());
     this.drawCount++;
-    
+
     this.drawScore();
   }
 
@@ -316,10 +312,10 @@ class Game {
       }
       if (
         enemy.collidesWith(this.spaceship) ||
-        (enemy.y + enemy.vy + enemy.height) >
-          (this.ctx.canvas.height - this.spaceship.height - enemy.height)
+        enemy.y + enemy.vy + enemy.height >
+          this.ctx.canvas.height - this.spaceship.height - enemy.height
       ) {
-           this.stopGame();
+        this.stopGame();
       }
     }
     for (let i = 0; i < this.crazyEnemies.length; i++) {
@@ -339,8 +335,8 @@ class Game {
       }
       if (
         crazy.collidesWith(this.spaceship) ||
-        (crazy.y + crazy.vy + crazy.height) >
-          (this.ctx.canvas.height - this.spaceship.height - crazy.height)
+        crazy.y + crazy.vy + crazy.height >
+          this.ctx.canvas.height - this.spaceship.height - crazy.height
       ) {
         this.stopGame();
       }
@@ -362,8 +358,8 @@ class Game {
       }
       if (
         attack.collidesWith(this.spaceship) ||
-        (attack.y + attack.vy + attack.height) >
-          (this.ctx.canvas.height - this.spaceship.height - attack.height)
+        attack.y + attack.vy + attack.height >
+          this.ctx.canvas.height - this.spaceship.height - attack.height
       ) {
         this.stopGame();
       }
@@ -404,8 +400,8 @@ class Game {
       });
       if (
         (bigEnemy.collidesWith(this.spaceship) ||
-        (bigEnemy.y + bigEnemy.vy + bigEnemy.height)) >
-          this.ctx.canvas.height - this.spaceship.height - bigEnemy.height
+          bigEnemy.y + bigEnemy.vy + bigEnemy.height) >
+        this.ctx.canvas.height - this.spaceship.height - bigEnemy.height
       ) {
         this.stopGame();
       }
@@ -425,7 +421,7 @@ class Game {
   }
 
   continuesGame() {
-    if (this.bigEnemies.length ===0 && this.enemies.length === 0) {
+    if (this.bigEnemies.length === 0 && this.enemies.length === 0) {
       this.restart();
       this.score += 28;
     }
@@ -447,14 +443,10 @@ class Game {
       (this.ctx.canvas.width - 240) / 2,
       this.ctx.canvas.height / 2
     );
-    setTimeout (() => {this.onGameEnd(this.score)}, 4000);
-    
-    const tBody = document.getElementById('end-menu-container');
-    const newTR = document.createElement('tr');
-    newTR.classList.add('score')
-    newTR.innerHTML = `
-    <td class="name"><span>${(this.score)}</span></td>`;
-  tBody.appendChild(newTR)
+    document.getElementById("game-sound").pause();
+    setTimeout(() => {
+      this.onGameEnd(this.score);
+    }, 4000);
   }
 
   generateBigEnemy() {
