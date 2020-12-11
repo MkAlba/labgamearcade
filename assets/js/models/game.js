@@ -34,8 +34,8 @@ class Game {
     if (!this.drawIntervalId) {
       this.drawIntervalId = setInterval(() => {
         this.clear();
-        this.move();
         this.draw();
+        this.move();
         this.chooseAttackers();
         this.attackersShoot();
         this.chooseCrazyEnemies();
@@ -254,17 +254,9 @@ class Game {
       }
     });
 
-    this.crazyEnemies.forEach((crazyEnemy) => {
-      if (
-        crazyEnemy.x + crazyEnemy.vx + crazyEnemy.width >
-        this.ctx.canvas.width
-      ) {
-        crazyEnemy.moveRight();
-      } else if (crazyEnemy.x + crazyEnemy.vx < 0) {
-        crazyEnemy.moveLeft();
-      } else {
-        crazyEnemy.move();
-      }
+    this.crazyEnemies.forEach(() => { 
+        this.moveTo();
+    
     });
 
     this.bigEnemies.forEach((bigEnemy) => {
@@ -278,16 +270,28 @@ class Game {
     });
   }
 
+  moveTo() { 
+  this.crazyEnemies.forEach((crazyEnemy) => { 
+    let dx = this.spaceship.x - crazyEnemy.x;
+    let dy = this.spaceship.y - crazyEnemy.y;
+    let distance = Math.sqrt((dx *dx) + (dy*dy));    
+    let speedX = crazyEnemy.vx * (dx/distance);
+    let speedY = crazyEnemy.vy * (dy/distance);
+    crazyEnemy.x += speedX;
+    crazyEnemy.y += speedY;        
+    });
+  
+}
   moveRight() {
     this.enemies.forEach((enemy) => enemy.moveRight());
     this.attackers.forEach((attacker) => attacker.moveRight());
-    //  this.crazyEnemies.forEach((crazyEnemy) => crazyEnemy.moveRight());
+    this.crazyEnemies.forEach((crazyEnemy) => crazyEnemy.moveRight());
     this.bigEnemies.forEach((bigEnemy) => bigEnemy.moveRight());
   }
   moveLeft() {
     this.enemies.forEach((enemy) => enemy.moveLeft());
     this.attackers.forEach((attacker) => attacker.moveLeft());
-    //this.crazyEnemies.forEach((crazyEnemy) => crazyEnemy.moveLeft());
+    this.crazyEnemies.forEach((crazyEnemy) => crazyEnemy.moveLeft());
     this.bigEnemies.forEach((bigEnemy) => bigEnemy.moveLeft());
   }
 

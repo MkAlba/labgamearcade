@@ -4,7 +4,7 @@ class Enemy {
     this.x = x;
     this.vx = 1;
     this.y = y;
-    this.vy = 0;
+    this.vy = 1;
 
     this.sprite = new Image();
     this.sprite.src = "assets/img/enemies.png";
@@ -79,10 +79,11 @@ class Enemy {
     this.x += this.vx;
     this.y += this.vy;
   }
-  /*  moveTo(a,b) {
-      this.x += a;
-      this.y += b;
-  }*/
+   
+  moveTo(a,b) {
+      this.x = this.vx + a;
+      this.y += this.vy + b;
+  }
 
   moveRight() {
     this.vx = -1;
