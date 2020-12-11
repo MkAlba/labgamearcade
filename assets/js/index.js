@@ -18,7 +18,6 @@ window.addEventListener("load", () => {
     document.getElementById("game-sound").play();
     document.getElementById("start-menu-container").classList.toggle("hidden");
     document.getElementById("canvas-container").classList.toggle("hidden");
-
     game.start();
   });
 

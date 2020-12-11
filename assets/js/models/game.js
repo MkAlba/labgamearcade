@@ -254,9 +254,8 @@ class Game {
       }
     });
 
-    this.crazyEnemies.forEach(() => { 
-        this.moveTo();
-    
+    this.crazyEnemies.forEach(() => {
+      this.moveTo();
     });
 
     this.bigEnemies.forEach((bigEnemy) => {
@@ -265,23 +264,32 @@ class Game {
       } else if (bigEnemy.x + bigEnemy.vx < 0) {
         this.moveLeft();
       } else {
-        bigEnemy.move();
+        this.moveBig();
       }
     });
   }
 
-  moveTo() { 
-  this.crazyEnemies.forEach((crazyEnemy) => { 
-    let dx = this.spaceship.x - crazyEnemy.x;
-    let dy = this.spaceship.y - crazyEnemy.y;
-    let distance = Math.sqrt((dx *dx) + (dy*dy));    
-    let speedX = crazyEnemy.vx * (dx/distance);
-    let speedY = crazyEnemy.vy * (dy/distance);
-    crazyEnemy.x += speedX;
-    crazyEnemy.y += speedY;        
+  moveTo() {
+    this.crazyEnemies.forEach((crazyEnemy) => {
+      let dx = this.spaceship.x - crazyEnemy.x;
+      let dy = this.spaceship.y - crazyEnemy.y;
+      let distance = Math.sqrt(dx * dx + dy * dy);
+      let speedX = crazyEnemy.vx * (dx / distance);
+      let speedY = crazyEnemy.vy * (dy / distance);
+      crazyEnemy.x += speedX;
+      crazyEnemy.y += speedY;
     });
-  
-}
+  }
+  moveBig() {
+    this.bigEnemies.forEach((bigEnemy) => {
+      let bigX = bigEnemy.vx * Math.floor(Math.random() * 3 + 1);
+      let bigY = bigEnemy.vy * Math.floor(Math.random() * 3 + 1);
+
+      bigEnemy.x += bigX;
+      bigEnemy.y += bigY;
+    });
+  }
+
   moveRight() {
     this.enemies.forEach((enemy) => enemy.moveRight());
     this.attackers.forEach((attacker) => attacker.moveRight());
@@ -310,7 +318,7 @@ class Game {
       if (collides) {
         this.enemies.splice(i, 1);
         this.score++;
-        if (this.enemies.length === 0) {
+        if (this.enemies.length === 7) {
           this.generateBigEnemy();
         }
       }

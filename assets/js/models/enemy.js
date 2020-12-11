@@ -80,11 +80,6 @@ class Enemy {
     this.y += this.vy;
   }
    
-  moveTo(a,b) {
-      this.x = this.vx + a;
-      this.y += this.vy + b;
-  }
-
   moveRight() {
     this.vx = -1;
     this.vy = GRAVITY;

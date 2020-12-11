@@ -5,4 +5,4 @@ const KEY_FIRE = 32;
 
 const SPEED = 4;
 const GRAVITY = 0.9;
-const GRAVITYBIG = 1.2;
+const GRAVITYBIG = 0.6;
